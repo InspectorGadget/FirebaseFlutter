@@ -2,19 +2,17 @@ import 'package:firebase/services/auth.dart';
 import 'package:flutter/material.dart';
 
 class Register extends StatefulWidget {
-
   final Function toggleView;
-  Register({ this.toggleView });
+  Register({this.toggleView});
 
   @override
   _RegisterState createState() => _RegisterState();
 }
 
 class _RegisterState extends State<Register> {
-
   final AuthService _authService = AuthService();
   final _formKey = GlobalKey<FormState>();
-  
+
   String email = '';
   String password = '';
   String error = '';
@@ -45,6 +43,16 @@ class _RegisterState extends State<Register> {
             children: <Widget>[
               SizedBox(height: 20.0),
               TextFormField(
+                decoration: InputDecoration(
+                    hintText: 'Email',
+                    fillColor: Colors.white,
+                    filled: true,
+                    enabledBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Colors.white, width: 2.0)),
+                    focusedBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Colors.pink, width: 2.0))),
                 validator: (value) => value.isEmpty ? 'Enter an Email' : null,
                 onChanged: (value) {
                   setState(() {
@@ -54,7 +62,19 @@ class _RegisterState extends State<Register> {
               ),
               SizedBox(height: 20.0),
               TextFormField(
-                validator: (value) => value.length < 6 ? 'Enter a password with 6+ chars long' : null,
+                decoration: InputDecoration(
+                    hintText: 'Password',
+                    fillColor: Colors.white,
+                    filled: true,
+                    enabledBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Colors.white, width: 2.0)),
+                    focusedBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Colors.pink, width: 2.0))),
+                validator: (value) => value.length < 6
+                    ? 'Enter a password with 6+ chars long'
+                    : null,
                 obscureText: true,
                 onChanged: (value) {
                   setState(() {
@@ -71,10 +91,11 @@ class _RegisterState extends State<Register> {
                 ),
                 onPressed: () async {
                   if (_formKey.currentState.validate()) {
-                    dynamic result = await _authService.registerWithEmailAndPassword(email, password);
+                    dynamic result = await _authService
+                        .registerWithEmailAndPassword(email, password);
                     if (result == null) {
                       setState(() {
-                       error = 'Please supply valid email'; 
+                        error = 'Please supply valid email';
                       });
                     }
                   }
@@ -85,7 +106,7 @@ class _RegisterState extends State<Register> {
                 error,
                 style: TextStyle(
                   color: Colors.red,
-                  fontSize: 14.0
+                  fontSize: 14.0,
                 ),
               )
             ],

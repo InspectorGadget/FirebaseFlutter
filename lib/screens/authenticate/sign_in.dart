@@ -2,16 +2,14 @@ import 'package:firebase/services/auth.dart';
 import 'package:flutter/material.dart';
 
 class SignIn extends StatefulWidget {
-
   final Function toggleView;
-  SignIn({ this.toggleView });
+  SignIn({this.toggleView});
 
   @override
   _SignInState createState() => _SignInState();
 }
 
 class _SignInState extends State<SignIn> {
-  
   final AuthService _authService = AuthService();
   final _formKey = GlobalKey<FormState>();
 
@@ -45,6 +43,17 @@ class _SignInState extends State<SignIn> {
             children: <Widget>[
               SizedBox(height: 20.0),
               TextFormField(
+                decoration: InputDecoration(
+                  hintText: 'Email',
+                  fillColor: Colors.white,
+                  filled: true,
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white, width: 2.0),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.pink, width: 2.0),
+                  ),
+                ),
                 validator: (val) => val.isEmpty ? 'Enter an Email' : null,
                 onChanged: (value) {
                   setState(() {
@@ -54,7 +63,20 @@ class _SignInState extends State<SignIn> {
               ),
               SizedBox(height: 20.0),
               TextFormField(
-                validator: (val) => val.length < 6 ? 'Enter a password with 6+ chars long' : null,
+                decoration: InputDecoration(
+                  hintText: 'Password',
+                  fillColor: Colors.white,
+                  filled: true,
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white, width: 2.0),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.pink, width: 2.0),
+                  ),
+                ),
+                validator: (val) => val.length < 6
+                    ? 'Enter a password with 6+ chars long'
+                    : null,
                 obscureText: true,
                 onChanged: (value) {
                   setState(() {
@@ -71,10 +93,11 @@ class _SignInState extends State<SignIn> {
                 ),
                 onPressed: () async {
                   if (_formKey.currentState.validate()) {
-                    dynamic result = await _authService.signInWithEmailAndPassword(email, password);
+                    dynamic result = await _authService
+                        .signInWithEmailAndPassword(email, password);
                     if (result == null) {
                       setState(() {
-                       error = 'Could not sign in with those Credentials :('; 
+                        error = 'Could not sign in with those Credentials :(';
                       });
                     }
                   }
@@ -85,7 +108,7 @@ class _SignInState extends State<SignIn> {
                 error,
                 style: TextStyle(
                   color: Colors.red,
-                  fontSize: 14.0
+                  fontSize: 14.0,
                 ),
               )
             ],
