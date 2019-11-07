@@ -1,6 +1,6 @@
-# firebase
+# FirebaseFlutter
 
-A new Flutter project.
+A Flutter Mobile App which was made on a Intermediate Flutter coding level & best practices.
 
 ## Getting Started
 
